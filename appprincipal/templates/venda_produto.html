@@ -1,0 +1,29 @@
+<!-- Estendemos do template base  -->
+{% extends "appprincipal/_layouts/base.html" %}
+
+{% load widget_tweaks %}
+
+<!-- Bloco de conteúdo da nossa página -->
+
+{% block conteudo %}
+
+<div class="alert alert-success">
+    <strong>Data da venda:</strong> 
+    {% render_field form.data %}
+</div>
+
+<div class="container mt-3">
+    <form method="post">
+        {% csrf_token %}
+        <div class="form-group">
+            <label type="text" value="insira nome do vendedor">VENDEDOR</label>
+            {% render_field form.fkvenda %}
+
+      
+        <button type="submit">Cadastrar</button>
+
+    </form>
+</div>
+
+
+{% endblock %}

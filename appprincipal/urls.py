@@ -10,6 +10,7 @@ urlpatterns = [
     path('', IndexTemplateView.as_view(), name = 'index'),
     path('about/', AboutView.as_view(), name = "about"),
     path('minhasvendas/', VendProdListView.as_view(), name="lista"),
+    path('quantidade/', Venda_QuantListView.as_view(), name="venda_quant"),
     path('cargo/funcionario', FuncionarioCreateView.as_view(), name="func_cad"),
     path('cargo/', CargoCreateView.as_view(), name="cargo"),
     path('novavenda/', NewVendaCreateView.as_view(), name ="nova_venda"),
@@ -26,8 +27,11 @@ urlpatterns = [
     path('listavenda/', VendProdListView.as_view(), name="lista_venda"),
     path('funcionario/<pk>', FuncionarioUpdateView.as_view(), name="update_func"),
     path('funcionario/', ListaFuncionariosListView.as_view(), name="lista_funcionarios"),
-    path('funcionario/excluir/<pk>', FuncionarioDeleteView.as_view(), name = 'deleta_funcionario')
-
-
+    path('funcionario/excluir/<pk>', FuncionarioDeleteView.as_view(), name = 'deleta_funcionario'),
+    path('produtovenda/', ProdutoCreateView.as_view(), name = 'venda_produto'),
+    path('register/', views.registerPage, name = "register"),
+    path('login/', views.loginPage, name = "login"),
+    path('logout/', views.logoutUser, name = "logout"),
     
+
 ]

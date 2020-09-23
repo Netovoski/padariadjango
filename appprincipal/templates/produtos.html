@@ -15,9 +15,10 @@
         <tbody> {% for produto in produtos %} <tr>
                 <td>{{ produto.fktipoprod }}</td>
                 <td>{{ produto.nmproduto }}</td>
-                <td>{{ produto.precoprod }}</td>
-                <td><a href="{% url 'appprincipal:update_prod' pk=produto.id %}">Atualizar</a></td>
-                <td><a href="{% url 'appprincipal:deleta_prod' pk=produto.id %}">. Deletar</a></td>
+                <td>{{ produto.precoprod }}</td>                                
+                </div>
+                <td><a href="{% url 'appprincipal:update_prod' pk=produto.id %}" class="btn btn-primary" >Atualizar</a></td>
+                <td><a href="{% url 'appprincipal:deleta_prod' pk=produto.id %}" class="btn btn-danger" >Deletar</a></td>
             </tr> {% endfor %}
         </tbody>
     </table>

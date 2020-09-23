@@ -135,4 +135,6 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
 CKEDITOR_UPLOAD_PATH = 'upload/'
 
+LOGIN_REDIRECT_URL = '/'
+
 django_heroku.settings(locals())

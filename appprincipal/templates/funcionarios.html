@@ -17,8 +17,8 @@
                 <td>{{ funcionario.sobrenome }}</td>
                 <td>{{ funcionario.cpf }}</td>
                 <td>{{ funcionario.remuneracao }}</td>
-                <td><a href="{% url 'appprincipal:update_func' pk=funcionario.id %}">Atualizar</a></td>
-                <td><a href="{% url 'appprincipal:deleta_funcionario' pk=funcionario.id %}">.          Deletar</a></td>
+                <td><a href="{% url 'appprincipal:update_func' pk=funcionario.id %}" class="btn btn-primary">Atualizar</a></td>
+                <td><a href="{% url 'appprincipal:deleta_funcionario' pk=funcionario.id %}" class="btn btn-danger">Deletar</a></td>
             </tr> {% endfor %}
         </tbody>
     </table>

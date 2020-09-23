@@ -1,5 +1,8 @@
 from projpad.models import *
 from django import forms
+from django.forms import ModelForm
+from django.contrib.auth.forms import UserCreationForm
+from django.contrib.auth.models import User
 
 class CargoForm(forms.ModelForm):
 
@@ -43,6 +46,7 @@ class RegistrarProdutoForm(forms.ModelForm):
             'precoprod',
             'fktipoprod',
         ]
+
 class RegistrarVendaForm(forms.ModelForm):
     
     class Meta:
@@ -50,29 +54,28 @@ class RegistrarVendaForm(forms.ModelForm):
 
         fields = [
             'vendedor',
-            'quantidade',
+            
+            
         ]
 
 class VendaForm(forms.ModelForm):
     class meta:
         model = Venda
+        
 
         fields = [
             '__all__'
         ]
 
-    def is_valid(self):
-        valida = True
-        if not super(dtcriacao,self).is_valid():
-            self.informa_erro('O campo não pode está vazio')
-            valida=False
+class Venda_ProdutoForm(forms.ModelForm):
+    class meta:
+        model = Venda_Produto
 
-        cat_exists = Produto.objects.filter(nome=self.data['nome']).exists()
+        fields = [
+            '__all__'
+        ]
 
-        if(cat_exists):
-            self.informa_erro('categoria já existe')
-            valida=False
-
-
-        return valida
-    
+class CreateUserForm(UserCreationForm):
+	class Meta:
+		model = User
+		fields = ['username', 'email', 'password1', 'password2']
