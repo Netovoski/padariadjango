@@ -240,7 +240,7 @@ class ProdutoCreateView(CreateView):
     fields = '__all__'
     success_url = reverse_lazy("appprincipal:index")
     @method_decorator(login_required)
-    @method_decorator(allowed_users(allowed_roles=['admin', 'gerente']))
+    @method_decorator(allowed_users(allowed_roles=['admin', 'gerente', 'funcionario']))
     def get (self, request):
 
         return render(request, self.template_name)
