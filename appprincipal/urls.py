@@ -1,8 +1,9 @@
 #from core.views import LocaisList, IndexTemplateView, LocalDetailView, RegCreateView, Pt1CreateView
 from . import views
-from appprincipal.views import IndexTemplateView,  AboutView, TermoView, PolView, ContView,  NewVendaCreateView, ProdListView, RegistrarTipoProdutoForm, Cadast_TipoProdCreateView
+from django.views.generic import View, TemplateView, CreateView, UpdateView, ListView, DeleteView
 from django.urls import path
 from appprincipal.views import *
+from . import views
 
 app_name = 'appprincipal'
 
@@ -27,7 +28,6 @@ urlpatterns = [
     path('listavenda/', VendProdListView.as_view(), name="lista_venda"),
     path('funcionario/<pk>', FuncionarioUpdateView.as_view(), name="update_func"),
     path('funcionario/', ListaFuncionariosListView.as_view(), name="lista_funcionarios"),
-    path('funcionario/excluir/<pk>', FuncionarioDeleteView.as_view(), name = 'deleta_funcionario'),
     path('produtovenda/', ProdutoCreateView.as_view(), name = 'venda_produto'),
     path('register/', views.registerPage, name = "register"),
     path('login/', views.loginPage, name = "login"),
