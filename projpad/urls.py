@@ -18,8 +18,11 @@ from django.views.generic import View, TemplateView, CreateView, UpdateView, Lis
 from django.contrib import admin
 from django.urls import include, path
 from django.conf import settings
-from appprincipal.views import *
 
+from appprincipal.funcionario.views import *
+from appprincipal.produto.views import *
+
+from appprincipal.registration.views import *
 
 from django.conf.urls.static import static
 from django.conf import settings
@@ -29,6 +32,10 @@ from django.conf import settings
 urlpatterns = [
     
     path('admin/', admin.site.urls),
+    path('func/', include('appprincipal.funcionario.urls')),
+    path('prod/', include('appprincipal.produto.urls')),
+    path('vendas/', include('appprincipal.vendas.urls')),
+    path('regis/', include('appprincipal.registration.urls')), 
     path('', include('appprincipal.urls', namespace='appprincipal')),
     ]+ static(settings.MEDIA_URL, document_root= settings.MEDIA_ROOT)
 

@@ -44,6 +44,10 @@ INSTALLED_APPS = [
     'projpad',
     'appprincipal',
     'ckeditor',
+    'appprincipal.funcionario',
+    'appprincipal.produto',
+    'appprincipal.vendas',
+    'appprincipal.registration',
 ]
 
 MIDDLEWARE = [
