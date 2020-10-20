@@ -13,6 +13,3 @@ class Produto(models.Model):
 	precoprod = models.DecimalField( max_digits=8, decimal_places=2, null=False, blank=False )
     
 	fktipoprod = models.ForeignKey(TipoProduto, on_delete=models.CASCADE)
-
-	def __str__(self):
-		return f'{self.nmproduto}'

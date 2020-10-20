@@ -36,7 +36,7 @@ class NewVendaCreateView(CreateView):
     #@method_decorator(login_required)
     #@method_decorator(allowed_users(allowed_roles=['admin', 'funcionario','gerente']))
     @method_decorator(login_required)
-    @method_decorator(allowed_users(allowed_roles=['funcionario', 'gerente', 'admin']))
+    #@method_decorator(allowed_users(allowed_roles=['funcionario', 'gerente', 'admin']))
     def get (self, request):
 
         return render(request, self.template_name)

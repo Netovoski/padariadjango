@@ -15,7 +15,12 @@
                     <form method="post">
                         <!-- Não se esqueça dessa tag -->
                         {% csrf_token %}
-
+                        <div class="input-group mb-3">
+                         <div class="input-group-prepend">
+                            <span class="input-group-text">Cargo</span>
+                        </div>
+                            {% render_field form.fkcargo class+="form-control" %}
+                        </div>
                         <!-- Nome -->
                         <div class="input-group mb-3">
                             <div class="input-group-prepend">
@@ -46,10 +51,12 @@
                             </div>
                             {% render_field form.remuneracao class+="form-control" %}
                         </div>
+                         <!-- Cargo -->
+                         
                         <hr />
                         <div class="text-right">
-                            <a href="{% url 'appprincipal:index' %}" class="btn btn-outline-primary">Voltar</a>
-                            <button class="btn btn-primary">Enviar</button>
+                            <a href="{% url 'funcionario:lista_funcionarios' %}" class="btn btn-outline-primary">Voltar</a>
+                            <button type="submit" class="btn btn-primary">Atualiza</button>
                         </div>
                     </form>
                 </div>

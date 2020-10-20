@@ -3,7 +3,6 @@ from django.db import models
 from ckeditor.fields import RichTextField
 from django.dispatch import receiver
 from django.db.models.signals import post_save
-# Create your views here.
 from django.shortcuts import render, redirect
 from django.views.generic import View, TemplateView, CreateView, UpdateView, ListView, DeleteView
 from django.urls import reverse_lazy,reverse
@@ -43,8 +42,8 @@ def registerPage(request):
 
 			messages.success(request, "Cadastro realizado com sucesso!"+ username)
 
-			return redirect('appprincipal:login')
-			#return redirect('appprincipal:index')
+			return redirect('registration:login')
+			
 
 	context = {'form':form}
 	return render(request, 'registration/registrar.html', context)
@@ -71,4 +70,4 @@ def loginPage(request):
 def logoutUser(request):
     logout(request)
     return redirect("registration:login")
-	#return redirect("appprincipal:login")
+

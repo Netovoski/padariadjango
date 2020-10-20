@@ -1,28 +1,45 @@
 <!-- Estendemos do template base  -->
 {% extends "appprincipal/_layouts/base.html" %}
 
-
-{% load widget_tweaks %}
-
 <!-- Bloco de conteúdo da nossa página -->
 
 {% block conteudo %}
-{% csrf_token %}
+<div class="container mt-5">
+    <div class="card">
+        <div class="card-body">
+            <h5 class="card-title">Produtos:</h5>
 
+            <p class="card-text">
 
-<div class="container mt-3">
-    <table>
-        <tbody> {% for produto in produtos %} <tr>
+            </p>
+
+            <form method="post">
+                            
+<table class="table table-hover">
+    <thead>
+        <tr>
+            <th>Tipo de Produto</th>
+            <th>Nome</th>
+            <th>Preço</th>
+            <th></th>
+        </tr>
+    </thead>              
+                   
+    
+        <tbody>  {% for produto in produtos %} <tr>
                 <td>{{ produto.fktipoprod }}</td>
                 <td>{{ produto.nmproduto }}</td>
-                <td>{{ produto.precoprod }}</td>                                
-                </div>
-                <td><a href="{% url 'appprincipal:update_prod' pk=produto.id %}" class="btn btn-primary" >Atualizar</a></td>
-                <td><a href="{% url 'appprincipal:deleta_prod' pk=produto.id %}" class="btn btn-danger" >Deletar</a></td>
+                <td>{{ produto.precoprod }}</td> 
+                <td><a href="{% url 'produto:update_prod' produto.id %}" class="btn btn-primary" >Atualizar</a></td>
+                <td><a href="{% url 'produto:deleta_prod' produto.id %}" class="btn btn-danger" >Deletar</a></td>
             </tr> {% endfor %}
         </tbody>
-    </table>
+    
+               
+            </form>
+</table>
+        </div>
+    </div>
 </div>
-
-
 {% endblock %}
+

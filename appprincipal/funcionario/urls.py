@@ -1,4 +1,4 @@
-
+from . import views
 from django.views.generic import View, TemplateView, CreateView, UpdateView, ListView, DeleteView
 from django.urls import path
 
@@ -11,7 +11,9 @@ urlpatterns = [
     
     path('cargo/funcionario', FuncionarioCreateView.as_view(), name="func_cad"),
     path('cargo/', CargoCreateView.as_view(), name="cargo"),
+    #path('funcionario/<pk>', FuncionarioUpdateView.as_view(), name="update_func"),
     path('funcionario/<pk>', FuncionarioUpdateView.as_view(), name="update_func"),
-    path('funcionario/', ListaFuncionariosListView.as_view(), name="lista_funcionarios"),
-
+    #path('funcionario/', FuncionariosListView.as_view(), name="lista_funcionarios"),
+    path('funcionario/', views.lista_funcionarios, name = "lista_funcionarios"),
+    path('funcionario/delete/<pk>', FuncionarioDeleteView.as_view(), name="delete_funcionario"),
 ]

@@ -6,42 +6,44 @@
 <!-- Bloco de conteúdo da nossa página -->
 
 {% block conteudo %}
-{% csrf_token %}
+<div class="container mt-5">
+    <div class="row">
+        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">Atualizar Dados de Funcionário</h5>
+                    <form method="post">
+                        <!-- Nome tipo-->
+                        {% csrf_token %}
+                        <div class="input-group mb-3">
+                         <div class="input-group-prepend">
+                            <span class="input-group-text">Nome Tipo do Produto</span>
+                        </div>
+                            {% render_field form.fktipoprod class+="form-control" %}
+                        </div>
+                        <!-- Nome produto -->
+                        <div class="input-group mb-3">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text">Nome</span>
+                            </div> {% render_field form.nmproduto class+="form-control" %}
+                        </div>
 
-
-<div class="container mt-3">
-    <!-- Nome tipo-->
-    <div class="input-group mb-3">
-        <div class="input-group-prepend">
-            <span class="input-group-text">Nome Tipo do Produto</span>
+                        <!-- Preço -->
+                        <div class="input-group mb-3">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text">Preço</span>
+                            </div>
+                            {% render_field form.precoprod class+="form-control" %}
+                        </div>                       
+                        <hr />
+                        <div class="text-right">
+                            <a href="{% url 'appprincipal:index' %}" class="btn btn-outline-primary">Voltar</a>
+                            <button type="submit" class="btn btn-primary">Atualiza</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
         </div>
-        {% render_field form.fktipoprod class+="form-control" %}
     </div>
-
-    <!-- Nome produto -->
-    <div class="input-group mb-3">
-        <div class="input-group-prepend">
-            <span class="input-group-text">Nome do Produto</span>
-        </div> {% render_field form.nmproduto class+="form-control" %}
-    </div>
-
-    <!-- Preço -->
-    <div class="input-group mb-3">
-        <div class="input-group-prepend">
-            <span class="input-group-text">Preço</span>
-        </div> {% render_field form.precoprod class+="form-control" %}
-    </div>
-    <hr />
-    <div class="text-right">
-        <a href="{% url 'appprincipal:index' %}" class="btn btn-outline-primary">Voltar</a>
-        <button class="btn btn-primary">Enviar</button>
-    </div>
-    </form>
 </div>
-</div>
-</div>
-</div>
-</div>
-
-
 {% endblock %}

@@ -1,28 +1,48 @@
 <!-- Estendemos do template base  -->
 {% extends "appprincipal/_layouts/base.html" %}
 
-
-{% load widget_tweaks %}
-
 <!-- Bloco de conteúdo da nossa página -->
 
 {% block conteudo %}
-{% csrf_token %}
+<div class="container mt-5">
+    <div class="card">
+        <div class="card-body">
+            <h5 class="card-title">Funcionarios</h5>
 
+            <p class="card-text">
 
-<div class="container mt-3">
-    <table>
+            </p>
+
+            <form method="post">
+                            
+<table class="table table-hover">
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>Nome</th>
+            <th>Sobrenome</th>
+            <th>CPF</th>
+            <th>Remuneração</th>
+            <th></th>
+        </tr>
+    </thead>              
+                   
+    
         <tbody> {% for funcionario in funcionarios %} <tr>
+                <td>{{ funcionario.id }}</td>
                 <td>{{ funcionario.nome }}</td>
                 <td>{{ funcionario.sobrenome }}</td>
                 <td>{{ funcionario.cpf }}</td>
                 <td>{{ funcionario.remuneracao }}</td>
-                <td><a href="{% url 'appprincipal:update_func' pk=funcionario.id %}" class="btn btn-primary">Atualizar</a></td>
-                <td><a href="{% url 'appprincipal:deleta_funcionario' pk=funcionario.id %}" class="btn btn-danger">Deletar</a></td>
+                <td><a href="{% url 'funcionario:update_func' funcionario.pk %}" class="btn btn-primary">Atualiza</a></td>
+                <td><a href="{% url 'funcionario:delete_funcionario' funcionario.pk %}" class="btn btn-danger">Deletar</a></td>
             </tr> {% endfor %}
         </tbody>
-    </table>
+    
+               
+            </form>
+</table>
+        </div>
+    </div>
 </div>
-
-
 {% endblock %}

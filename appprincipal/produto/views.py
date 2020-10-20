@@ -60,38 +60,47 @@ class ProdListView(ListView):
         return render(request, self.template_name)
 
 
-class ListaProdutoListView(ListView):
-    template_name = "produto/produtos.html"
-    model = Produto
-    context_object_name = "produtos"
-    @method_decorator(login_required)
-    #@method_decorator(allowed_users(allowed_roles=['admin', 'gerente']))
-    def get (self, request):
+# class ListaProdutoListView(ListView):
+#     template_name = "produto/produtos.html"
+#     model = Produto
+#     context_object_name = "produtos"
+#     @method_decorator(login_required)
+#     #@method_decorator(allowed_users(allowed_roles=['admin', 'gerente']))
+#     def get (self, request):
 
-        return render(request, self.template_name)
+#         return render(request, self.template_name)
+@login_required
+def ProdutoListView(ListView):
+    produtos = Produto.objects.all()
+    
+    contexto = {
+        'produtos': produtos
+    }
 
-class ProdutoUpdateView(UpdateView):
+    return render(ListView, "produto/produtos.html",contexto)
+
+class ProdutoUpdateView(LoginRequiredMixin, UpdateView):
     template_name = "produto/atualiza_prod.html"
     model = Produto
-    context_object_name = "produto"
     fields = '__all__'
-    success_url = reverse_lazy("appprincipal:lista_produto")
-    @method_decorator(login_required)
-    @method_decorator(allowed_users(allowed_roles=['admin','gerente']))
-    def get (self, request):
+    context_object_name = "produto"
+    success_url = reverse_lazy("appprincipal:index")
+    # @method_decorator(login_required)
+    # #@method_decorator(allowed_users(allowed_roles=['admin','gerente']))
+    # def get (self, request):
 
-        return render(request, self.template_name)
-
-class ProdutoDeleteView(DeleteView):
+    #     return render(request, self.template_name)
+    
+class ProdutoDeleteView(LoginRequiredMixin, DeleteView):
     template_name = "produto/exclui_prod.html"
     model = Produto
     context_object_name =  'produto'
-    success_url = reverse_lazy("appprincipal:lista_produto")
-    @method_decorator(login_required)
-    @method_decorator(allowed_users(allowed_roles=['admin', 'gerente']))
-    def get (self, request):
+    #success_url = reverse_lazy("appprincipal:lista_produto")
+    #@method_decorator(login_required)
+    #@method_decorator(allowed_users(allowed_roles=['admin', 'gerente']))
+    def get_success_url (self):
 
-        return render(request, self.template_name)
+        return reverse("produto:lista_produto")
 
 
 

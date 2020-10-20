@@ -15,5 +15,6 @@ class Funcionario(models.Model):
     remuneracao = models.DecimalField(max_digits=8, decimal_places=2, null=False, blank=False)
     fkcargo =  models.ForeignKey(TipoCargo, on_delete=models.CASCADE)
 
-
+    def __str__(self):
+        return self.nome
 
