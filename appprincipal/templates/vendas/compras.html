@@ -1,0 +1,56 @@
+<!-- Estendemos do template base  -->
+{% extends "appprincipal/_layouts/base.html" %}
+
+{% load static %}
+<!-- Bloco de conteúdo da nossa página -->
+
+{% block conteudo %}
+<section id="meus-pedidos" class="container px-4">
+    <div class="text-lefth mb-5">
+        <h4>Carrinho de compras: <br> <strong>{{vendedor}}</strong></h4>
+    </div>
+    <div class="row mb-5">
+        {% if msg is not None %}
+        <div class="col text-right">
+            <p class="mb-5"><strong>{{msg}}</strong></p>
+        </div>
+        {% endif %}
+        {% if compra is not None %}
+        <div class="table-responsive">
+            <table class="table table-striped table-hover">
+                <thead class="thead-dark">
+                    <tr>
+                        <th scope="col">#</th>
+                        <th scope="col">Produto</th>
+                        <th scope="col">Valor</th>
+                        <th scope="col">Quantidade</th>
+                        </tr>
+                </thead>
+                <tbody>
+                    {% for item in item %}
+                    <tr>
+                        <th scope="row">{{item.id}}</th>
+                        <td>{{item.fkproduto}}</td>
+                        
+                        <td>{{item.quantidade}}</td>
+                        
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+                <tfooter>
+                    <tr>
+                        <th scope="col">#</th>
+                        <th scope="col">Produto</th>
+                        <th scope="col"> valor total R$</th>
+                        <th scope="col">{{quantidade_total}}</th>
+                        <th scope="col"><button class="btn btn-sm btn-primary">Comprar</button></th>
+                    </tr>
+                </tfooter>
+            </table>
+        </div>
+        {% endif %}
+    </div>
+</section> 
+
+{% endblock %}

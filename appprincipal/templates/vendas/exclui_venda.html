@@ -10,7 +10,7 @@
             <h5 class="card-title">Exclusão de Venda</h5>
 
             <p class="card-text">
-                Você tem certeza que quer excluir a venda <b>{{ produto.nmproduto }}</b>?
+                Você tem certeza que quer excluir a venda <b>{{ compras.id }}</b> do Funcionario <b>{{ compras.fkfuncionario }} </b> ?
             </p>
 
             <form method="post">
@@ -18,8 +18,8 @@
 
                 <hr />
                 <div class="text-right">
-                    <a href="{% url 'appprincipal:index' %}" class="btn btn-outline-danger">
-                        Cancelar
+                    <td><a href="{% url 'vendas:minhasvendas' %}" class="btn btn-primary">Cancelar</a></td>
+                        
                     </a>
                     <button class="btn btn-danger">Excluir</button>
                 </div>

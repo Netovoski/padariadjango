@@ -10,18 +10,12 @@ import datetime
 from django.dispatch import receiver
 from django.db.models.signals import post_save
 from appprincipal.produto.models import *
-
 from django.shortcuts import render, redirect
-
 from django.contrib.auth.decorators import login_required #para Functions Based Views
-
 from django.urls import reverse_lazy,reverse
 from django.http import HttpResponse, JsonResponse
-
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.mixins import LoginRequiredMixin #para Classes Based Views
-
-
 from django.contrib.auth.models import Group
 from django.utils.decorators import method_decorator
 from appprincipal.produto.views import *
@@ -60,15 +54,6 @@ class ProdListView(ListView):
         return render(request, self.template_name)
 
 
-# class ListaProdutoListView(ListView):
-#     template_name = "produto/produtos.html"
-#     model = Produto
-#     context_object_name = "produtos"
-#     @method_decorator(login_required)
-#     #@method_decorator(allowed_users(allowed_roles=['admin', 'gerente']))
-#     def get (self, request):
-
-#         return render(request, self.template_name)
 @login_required
 def ProdutoListView(ListView):
     produtos = Produto.objects.all()
@@ -101,8 +86,3 @@ class ProdutoDeleteView(LoginRequiredMixin, DeleteView):
     def get_success_url (self):
 
         return reverse("produto:lista_produto")
-
-
-
-
-

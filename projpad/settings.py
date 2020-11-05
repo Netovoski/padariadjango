@@ -130,7 +130,13 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 # STATIC_ROOT = '/staticfiles/'
+STATIC_URL = '/static/'
+STATIC_URL = '/static/css/'
+STATIC_URL = '/static/js/'
+STATIC_URL = '/static/img/'
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 
+django_heroku.settings(locals())
 MEDIA_URL = 'media/'
 
 DISABLE_COLLECTSTATIC = 1

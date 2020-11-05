@@ -1,109 +1,117 @@
 <!doctype html>
 {% load static %}
 <html lang="PT-BR" class="h-100">
-  <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <meta name="description" content="">
-    <meta name="author" content="Mark Otto, Jacob Thornton, and Bootstrap contributors">
-    <meta name="generator" content="Jekyll v4.0.1">
-    <title>Padaria</title>
-        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
-          integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
-        <link rel="shortcut icon" href="{% static 'apppricipal/media/logo.jpg' %}" type="image/jpg">
-       <!-- Bootstrap appprincipal CSS -->
-      
-    <link rel="stylesheet" type="text/css" href="{%static 'appprincipal/css/bootstrap.min.css' %}">
-    <link rel="stylesheet" type="text/css" href="{%static 'appprincipal/css/sticky-footer-navbar.css' %}">
-    <link rel="stylesheet" href="{% static 'appprincipal/css/bootstrap.min.css' %}">
-    <link rel="stylesheet" href="{% static 'appprincipal/css/master.css' %}">
-  </head>
 
-  <!-- Fixed navbar -->
-  <body class="d-flex flex-column h-100">
-    <header>
-<nav class="navbar navbar-expand-lg navbar-light bg-light">
-  <img src="{%static 'appprincipal/media/logo.jpg' %}" width="30" height="30" class="d-inline-block align-top" alt=""
-    loading="lazy">
-  <a class="navbar-brand" href="{% url 'appprincipal:index' %}">Padaria Boa Sorte</a>
-  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown"
-    aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
-    <span class="navbar-toggler-icon"></span>
-  </button>
-  <div class="collapse navbar-collapse" id="navbarNavDropdown">
-    <ul class="navbar-nav">
-      <li class="nav-item active">
-        <a class="nav-link" href="/vendas/quantidade/{{ venda_quant.link }}">Minhas Vendas <span class="sr-only">(current)</span></a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link" href="/vendas/novavenda/{{ nova_venda.link }}">Nova Venda</a>
-      </li>
-      <li class="nav-item dropdown">
-        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown"
-          aria-haspopup="true" aria-expanded="false">
-          Produto
-        </a>
-        <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-          <a class="dropdown-item" href="/prod/tipoprod/{{ tipoprod.link }}">Cadastrar Tipo de Produto</a>
-          <a class="dropdown-item" href="/prod/tipoprod/produto/{{ produto.link }}">Cadastrar Produto</a>
-          <a class="dropdown-item" href="/prod/produto/{{ lista_produto.link }}">Editar Produto</a>
-        </div>
-      </li>
-      <li class="nav-item dropdown">
-        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown"
-          aria-haspopup="true" aria-expanded="false">
-          Funcionario
-        </a>
-        <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-          <a class="dropdown-item" href="/func/cargo/{{ func_cad.link }}">Cadastrar Cargo</a>
-          <a class="dropdown-item" href="/func/cargo/funcionario{{ func_cad.link }}">Cadastrar Funcionario</a>
-          <a class="dropdown-item" href="/func/funcionario/{{ lista_funcionarios.link }}">Editar Funcionario</a>
-        </div>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link" href="#">Gerenciar Prioridade</a>
-      </li>
-    </ul>
-  </div>
-</nav>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="">
+  <meta name="author" content="Mark Otto, Jacob Thornton, and Bootstrap contributors">
+  <meta name="generator" content="Jekyll v4.0.1">
+  <title>Padaria</title>
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
+    integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
+  <link rel="shortcut icon" href="{% static 'apppricipal/media/logo.jpg' %}" type="image/jpg">
+  <!-- Bootstrap appprincipal CSS -->
 
-  
+  <link rel="stylesheet" type="text/css" href="{%static 'appprincipal/css/bootstrap.min.css' %}">
+  <link rel="stylesheet" type="text/css" href="{%static 'appprincipal/css/sticky-footer-navbar.css' %}">
+  <link rel="stylesheet" href="{% static 'appprincipal/css/bootstrap.min.css' %}">
+  <link rel="stylesheet" href="{% static 'appprincipal/css/master.css' %}">
+</head>
 
-    </header>
+<!-- Fixed navbar -->
 
-<!-- Begin page content -->
+<body class="d-flex flex-column h-100">
+  <header>
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+      <img src="{%static 'appprincipal/media/logo.jpg' %}" width="30" height="30" class="d-inline-block align-top"
+        alt="" loading="lazy">
+      <a class="navbar-brand" href="{% url 'appprincipal:index' %}">Padaria Boa Sorte</a>
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown"
+        aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarNavDropdown">
+        <ul class="navbar-nav">
+          <li class="nav-item">
+            <a class="nav-link" href="{% url 'vendas:add_venda' %}" >Nova Venda</a>
+          </li>
+          <li class="nav-item ">
+            <a class="nav-link" href="{% url 'vendas:minhasvendas' %}">Minhas Vendas <span
+                class="sr-only">(current)</span></a>
+          </li>
+
+
+
+
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button"
+              data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+              Produto
+            </a>
+            <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+              <a class="dropdown-item" href="{% url 'produto:tipoprod' %}">Cadastrar Tipo de Produto</a>
+              <a class="dropdown-item" href="{% url 'produto:produto' %}">Cadastrar Produto</a>
+              <a class="dropdown-item" href="{% url 'produto:lista_produto' %}">Editar Produto</a>
+            </div>
+          </li>
+
+
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button"
+              data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+              Funcionario
+            </a>
+            <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+              <a class="dropdown-item" href="{% url 'funcionario:cargo' %}">Cadastrar Cargo</a>
+              <a class="dropdown-item" href="{% url 'funcionario:func_cad' %}">Cadastrar Funcionario</a>
+              <a class="dropdown-item" href="{% url 'funcionario:lista_funcionarios' %}">Editar Funcionario</a>
+            </div>
+          </li>
+
+          
+        </ul>
+      </div>
+    </nav>
+
+
+
+  </header>
+
+  <!-- Begin page content -->
   <main role="main" class="flex-shrink-0">
-    <script
-      src="https://code.jquery.com/jquery-3.4.1.min.js"
-      integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo="
-      crossorigin="anonymous"
-    ></script>
-  {% block conteudo %}{% endblock %}
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js"
+      integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
+    {% block conteudo %}{% endblock %}
   </main>
-<style>
-  .text-muted
-  {font-size: 16px; 
-  collor: #fff; 
-  margin-right: 14px}
-</style>
+  <style>
+    .text-muted {
+      font-size: 16px;
+      collor: #fff;
+      margin-right: 14px
+    }
+  </style>
   <footer class="footer mt-auto py-3">
     <div class="container" style="text-align: center;">
-      <span class="text-muted" >
-        {% if user.is_authenticated %}Logado como: {{ user.get_username }} 
+      <span class="text-muted">
+        {% if user.is_authenticated %}Logado como: {{ user.get_username }}
         <a href="{% url 'logout'%}?next={{request.path}}"> Sair</a>
         {% endif %}
-          - Em caso de dúvidas: fernando_perazzo@yahoo.com.br 
+        - Em caso de dúvidas: fernando_perazzo@yahoo.com.br
         <div class="small-print">
-        	<div class="container">
-        		<a href="{% url 'appprincipal:termo_cond' %}">Termos &amp; Condições</a> | <a href="{% url 'appprincipal:pol' %}">Política de privacidade</a> | <a href="{% url 'appprincipal:cont' %}">Contato</a></p>
-        	</        div>
-        </div>
-    </span>
+          <div class="container">
+            <a href="{% url 'appprincipal:termo_cond' %}">Termos &amp; Condições</a> | <a
+              href="{% url 'appprincipal:pol' %}">Política de privacidade</a> | <a
+              href="{% url 'appprincipal:cont' %}">Contato</a></p>
+            </ div>
+          </div>
+      </span>
     </div>
   </footer>
   <script src="{% static 'appprincipal/js/bootstrap.bundle.min.js' %}"></script>
-    {% block scripts %}{% endblock scripts%}
+  {% block scripts %}{% endblock scripts%}
 
-  </body>
-  
+</body>
+
 </html>

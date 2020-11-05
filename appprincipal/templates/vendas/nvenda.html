@@ -1,0 +1,150 @@
+
+<!-- Estendemos do template base  -->
+{% extends "appprincipal/_layouts/base.html" %}
+
+{% load widget_tweaks %}
+
+<!-- Bloco de conteúdo da nossa página -->
+{% block conteudo %}
+
+<div class="container mt-5">
+  <div class="row">
+    <div class="col-md-4 ">
+      <div class="text-lefth mb-5">
+        <h4>Funcionario: {{ user.get_username }} <br> <strong></strong></h4>
+      </div>
+      <form method="post">
+        <!-- Não se esqueça dessa tag -->
+
+        {% csrf_token %}
+        <div class="input-group mb-3">
+          <div class="input-group-prepend">
+            <span class="input-group-text">Nome</span>
+          </div>
+          {% render_field form.fkproduto class+="form-control" %}
+        </div>
+        <!-- quantidade -->
+        <div class="input-group mb-3">
+          <div class="input-group-prepend">
+            <span class="input-group-text">Quantidade</span>
+          </div>
+          {% render_field form.quantidade class+="form-control" %}
+        </div>
+
+        <!-- preço -->
+        <div class="input-group mb-3">
+          <div class="input-group-prepend">
+            <span class="input-group-text">Preço</span>
+          </div>
+          {% render_field form.precovenda class+="form-control" %}
+        </div>
+       
+
+        <button class="btn btn-primary form-control" type="submit">Adicionar</button>
+      </form>
+
+      <div>
+        {% if form.errors %}
+        {% for field in form %}
+        {% for error in field.errors %}
+        <div class="alert alert-danger">
+          <strong>{{ error|escape }}</strong>
+        </div>
+        {% endfor %}
+        {% endfor %}
+        {% for error in form.non_field_errors %}
+        <div class="alert alert-danger">
+          <strong>{{ error|escape }}</strong>
+        </div>
+        {% endfor %}
+        {% endif %}
+      </div>
+
+      <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.10/jquery.mask.js"></script>
+      <script>
+        $(document).ready(function () {
+          var preco;
+          var precoTotal = 0;
+          precoTotal.toFixed(2);
+          $('td:nth-child(4)').each(function () {
+            preco = $(this).html();
+            precoTotal += parseFloat(preco);
+            $('#precoTot').text(precoTotal);
+          })
+        }
+        );
+      </script>
+      <script>
+        $(document).ready(function () {
+          var quantidade;
+          var quantidadeTotal = 0;
+          quantidadeTotal.toFixed(2);
+          $('td:nth-child(3)').each(function () {
+            quantidade = $(this).html();
+            quantidadeTotal += parseFloat(quantidade);
+            $('#quantidadeTot').text(quantidadeTotal);
+          })
+        }
+        );
+      </script>
+      
+    </div>
+    <div class="col-md-8">
+      <h4>Produtos Cadastrados: {{ fkvenda_id }}</td></h4>
+      <table id="operTable" class="table table-striped" style="text-align:center;">
+        <tr>
+          <th>Tipo</th>
+          <th>Nome</th>
+          <th>QTD</th>
+          <th>Preco(R$)</th>
+          <th>Preco/QTD(R$)</th>
+          <th>Opt.</th>
+                  
+        </tr>
+        {% csrf_token %}
+        {% for pt in prods %}
+        <tr>
+
+            
+          <td>{{ pt.fkproduto.fktipoprod }}</td>
+          <td>{{ pt.fkproduto.nmproduto }}</td>
+          <td>{{ pt.quantidade }}</td>
+          <td>{{ pt.precovenda }}</td>
+          <td>R${{ pt.total }}</td>
+          
+         
+         
+          <td><a href="{% url 'vendas:deletarunid' pt.id %}" class="btn btn-danger">Deletar</a></td>
+          
+
+          </td>
+        </tr>
+        {% endfor %}
+        {% csrf_token %}
+        <th></th>
+        
+        <th>  </th>
+        <th>Quantidade Total:{{ prodcomsoma.prodcomsoma }}</th>
+        <th>  </th>
+        <th>Valor Total:R${{ total.total }}</th>
+        </th>
+        
+        
+
+        <th scope="col"><button class="btn btn-sm btn-primary">Comprar</button></th>
+      </table>
+    </div>
+
+  </div>
+
+  {% if messages %}
+  <ul class="messages">
+    {% for message in messages %}
+    <li {% if message.tags %} class=" {{ message.tags }} " {% endif %}> alert({{ message }}) </li>
+    {% endfor %}
+  </ul>
+  {% endif %}
+
+</div>
+{% endblock %}

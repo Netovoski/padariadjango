@@ -18,7 +18,6 @@ import datetime
 
 
 
-
 # Create your views here.
 
 class IndexTemplateView(TemplateView):

@@ -34,7 +34,7 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('func/', include('appprincipal.funcionario.urls')),
     path('prod/', include('appprincipal.produto.urls')),
-    path('vendas/', include('appprincipal.vendas.urls')),
+    path('vendas/', include('appprincipal.vendas.urls', namespace='vendas')),
     path('regis/', include('appprincipal.registration.urls')), 
     path('', include('appprincipal.urls', namespace='appprincipal')),
     ]+ static(settings.MEDIA_URL, document_root= settings.MEDIA_ROOT)

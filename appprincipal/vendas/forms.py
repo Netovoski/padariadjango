@@ -9,27 +9,6 @@ from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
 
 
-
-class RegistrarVendaForm(forms.ModelForm):
-    
-    class Meta:
-        model = Venda
-
-        fields = [
-            'vendedor',
-            
-            
-        ]
-
-class VendaForm(forms.ModelForm):
-    class meta:
-        model = Venda
-        
-
-        fields = [
-            '__all__'
-        ]
-
 class Venda_ProdutoForm(forms.ModelForm):
     class meta:
         model = Venda_Produto

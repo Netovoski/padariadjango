@@ -30,3 +30,8 @@ class FuncionarioForm(forms.ModelForm):
             'cpf',
             'remuneracao',
         ]
+
+class UserForm(forms.ModelForm):
+    class Meta:
+        model = User
+        fields = ('first_name', 'last_name', 'email')

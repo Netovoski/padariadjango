@@ -1,5 +1,4 @@
 from django.shortcuts import render
-# Create your views here.
 from appprincipal.vendas.forms import *
 from appprincipal.registration.decorators import unauthenticated_user, allowed_users, admin_only
 from django.views.generic import View, TemplateView, CreateView, UpdateView, ListView, DeleteView
@@ -10,89 +9,143 @@ import datetime
 from django.dispatch import receiver
 from django.db.models.signals import post_save
 from appprincipal.vendas.models import *
-
+from django.db.models import Avg, Sum, Count, F, FloatField
 from django.shortcuts import render, redirect
-
 from django.contrib.auth.decorators import login_required #para Functions Based Views
-
 from django.urls import reverse_lazy,reverse
-from django.http import HttpResponse, JsonResponse
-
+from django.http import HttpResponseRedirect, HttpResponse, JsonResponse, Http404
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.mixins import LoginRequiredMixin #para Classes Based Views
-
 from django.contrib.auth.models import Group
 from django.utils.decorators import method_decorator
-
+import ipdb
 
 # Create your views here.
 
-class NewVendaCreateView(CreateView):
-    template_name = "vendas/nova_venda.html"
-    model = Venda
-    form_class = RegistrarVendaForm
-    success_url = reverse_lazy("appprincipal:venda_produto")
-    #@method_decorator(login_required, allowed_users(allowed_roles=['customer']))
-    #@method_decorator(login_required)
-    #@method_decorator(allowed_users(allowed_roles=['admin', 'funcionario','gerente']))
-    @method_decorator(login_required)
-    #@method_decorator(allowed_users(allowed_roles=['funcionario', 'gerente', 'admin']))
-    def get (self, request):
-
-        return render(request, self.template_name)
+@login_required
+def venda_create(request):
 
 
-class VendaDeleteView(DeleteView):
+    novavenda2 = Venda2(fkfuncionario = request.user)
+
+    #from ipdb import set_trace; set_trace()
+
+    novavenda2.save()
+
+
+    idvv = novavenda2.id
+    #from ipdb import set_trace; set_trace()
+
+    return redirect('vendas:nova_venda', idvenda2 = idvv)
+
+
+class NovavendaView(CreateView):
+    fields = ['fkproduto', 'quantidade', 'precovenda']
+    template_name = "vendas/nvenda.html"
+    model = Venda_Produto
+    
+    # def totalunid(self):
+		
+	# 	return self.quantidade*self.precovenda
+
+    def form_valid(self, form,  **kwargs):
+
+        #from ipdb import set_trace; set_trace()        
+        idvendaxxx = self.kwargs['idvenda2']
+        vend_prodform = form.save(commit=False)
+        vend_prodform.fkvenda_id = idvendaxxx       #passando o id do orçamento 
+        self.object = vend_prodform.save() #Salvando e apagando os dados do formulário
+        
+        return HttpResponseRedirect(self.request.path_info) #retornando para a mesma página
+    
+    def get_context_data(self, **kwargs):
+        ido = self.kwargs['idvenda2']
+
+        produtos = Venda_Produto.objects.filter(fkvenda_id=ido)
+        prodcomsoma = produtos.values('quantidade').aggregate(prodcomsoma=Sum("quantidade"))
+        valorcomsoma = produtos.values('precovenda').aggregate(valorcomsoma=Sum("precovenda"))
+            
+
+        context = super(NovavendaView, self).get_context_data(**kwargs)
+        total = Venda_Produto.objects.filter(fkvenda_id=ido).aggregate(total=Sum(F('quantidade')*F('precovenda'),output_field=models.FloatField()))
+
+        context['prods'] = produtos
+        context['prodcomsoma'] = prodcomsoma
+        context['valorcomsoma'] = valorcomsoma
+        context['total'] = total
+        
+       
+        return context
+
+
+@login_required
+def DeletarUnid(request,pk):
+    tp = Venda_Produto.objects.get(id=pk)
+    venda = tp.fkvenda.id
+
+    tp.delete()
+    
+    return redirect("vendas:nova_venda", idvenda2=venda)
+
+class VendaDeleteView(LoginRequiredMixin, DeleteView):
     template_name = "vendas/exclui_venda.html"
-    model = Produto
-    context_object_name =  'produto'
-    success_url = reverse_lazy("appprincipal:index")
-    @method_decorator(login_required)
-    @method_decorator(allowed_users(allowed_roles=['admin', 'gerente']))
-    def get (self, request):
+    model = Venda2
+    context_object_name =  'compras'
+    
+    def get_success_url (self):
 
-        return render(request, self.template_name)
-
-class VendaCreateView(CreateView):
-    template_name = "vendas/venda.html"
-    model = Venda_Produto
-    context_object_name =  'venda_produtos'
-    fields = '__all__'
-    success_url = reverse_lazy("appprincipal:index")
-    @method_decorator(login_required)
-    @method_decorator(allowed_users(allowed_roles=['admin']))
-    def get (self, request):
-
-        return render(request, self.template_name)
-
-class VendProdListView(ListView):
-    template_name = "vendas/venda_prod.html"
-    model = Venda_Produto
-    context_object_name = "lista_venda"
-    @method_decorator(login_required, allowed_users(allowed_roles=['customer', 'funcionario', 'gerente']))
-    def get (self, request):
-
-        return render(request, self.template_name)
+        return reverse("vendas:minhasvendas")
 
 
-class Venda_QuantListView(ListView):
-    template_name = "vendas/venda_quant.html"
-    model = Venda
-    context_object_name = "vendas"
-    @method_decorator(login_required)
-    @method_decorator(allowed_users(allowed_roles=['admin', 'customer', 'funcionario', 'gerente']))
-    def get (self, request):
+@login_required
+def CompraListView(request):
 
-        return render(request, self.template_name)
 
-class ProdutoCreateView(CreateView):
-    template_name = "vendas/venda_produto.html"
-    model = Venda_Produto
-    context_object_name =  'venda_produtos'
-    fields = '__all__'
-    success_url = reverse_lazy("appprincipal:index")
-    @method_decorator(login_required)
-    @method_decorator(allowed_users(allowed_roles=['admin', 'gerente', 'funcionario']))
-    def get (self, request):
+    #vendedor = Venda_Produto.objects.get(id=pk)
+    #venda = vendedor.fkvenda.id
+    compras = Venda2.objects.all()
+    venda_produtos = Venda_Produto.objects.all()
+    #total = Venda_Produto.objects.all().annotate(total=Sum(F('quantidade')*F('precovenda'),output_field=models.FloatField()))
+    #total = Venda_Produto.objects.all().annotate(total=F('quantidade')*F('precovenda'))
+    #produtos = Venda_Produto.objects.filter(fkvenda_id=id)
+    #prodcomsoma = produtos.values('quantidade').aggregate(prodcomsoma=Sum("quantidade"))
+    contexto = {
+        'compras': compras,
+        #'total' : total,
+        #'produto' : produto,
+        'venda_produtos' : venda_produtos
+    }
+    
+    return render(request, "vendas/minhas_vendas.html",contexto)
 
-        return render(request, self.template_name)
+def finalizacompra(request, id):
+
+    try:
+        vendedor = Venda_Produto.objects.get(id = vendedor)
+        
+        venda_produto = Venda_Produto.objects.filter(fkvenda=vendedor).all()
+        quantidade_total_produtos = 0
+        item = Venda_Produto.objects.all()
+    
+        args = None
+        if compra is None:
+
+            args = {
+                'msg': 'Nenhum produto no adcionado',
+                'vendedor': vendedor.id
+            }
+        else:
+            args = {
+                'item': item,
+                'compra': compra,
+                'vendedor': vendedor,
+                #'valor_total': valor_total_produtos,
+                'quantidade_total': quantidade_total_produtos,
+        }
+
+    except vendedor.DoesNotExist:
+        return reverse("vendas:minhasvendas")
+    
+    
+    return render(request, 'vendas/compras.html', args)
+    

@@ -1,0 +1,50 @@
+<!-- Estendemos do template base  -->
+{% extends "appprincipal/_layouts/base.html" %}
+
+<!-- Bloco de conteúdo da nossa página -->
+
+{% block conteudo %}
+<div class="container mt-5">
+    <div class="card">
+        <div class="card-body">
+            <h5 class="card-title">Minhas Vendas:</h5>
+
+<p class="card-text">
+
+</p>
+
+<form method="post">
+
+    <table class="table table-hover">
+        <thead>
+            <tr>
+                <th>ID_venda </th>
+                <th>Funcionario</th>
+                <th>Data Criação</th>
+                <th>Valor</th>
+                <th></th>
+
+    <tbody> {% for compra in compras %} <tr>
+            <td>{{ compra.id }}</td>
+            <td>{{ compra.fkfuncionario }}</td>
+            <td>{{ compra.vdatacriacao }}</td>
+
+           {% for venda_produto in venda_produtos %} 
+        <td>{{ venda_produto.total }}</td>
+       
+        {% endfor %}
+
+            <td><a href="{% url 'vendas:nova_venda' compra.id %}" class="btn btn-primary">Acessar Compra</a></td>
+            <td><a href="{% url 'vendas:compra_produtos' compra.id %}" class="btn btn-success">Finaliza Compra</a></td>
+            <td><a href="{% url 'vendas:deletarvenda' compra.id %}" class="btn btn-danger">Excluir</a></td>
+        </tr> {% endfor %}
+    </tbody>
+
+
+
+</form>
+</table>
+</div>
+</div>
+</div>
+{% endblock %}
