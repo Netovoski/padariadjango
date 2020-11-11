@@ -11,9 +11,10 @@ urlpatterns = [
 
     path('novavenda/<int:idvenda2>', NovavendaView.as_view(), name ="nova_venda"),
     path('novavenda/excluir/<pk>',views.DeletarUnid, name='deletarunid'),
-    path('minhasvendas/',views.CompraListView, name='minhasvendas'),
+    path('minhasvendas/', CompraListView.as_view(), name='minhasvendas'),
     path('minhasvendas/excluir/<pk>', VendaDeleteView.as_view(), name='deletarvenda'),
-    path('compras/<int:id>', views.finalizacompra, name = 'compra_produtos'),
+    #path('compras/<pk>', views.finalizaCompra, name = 'compra_produtos'),
+    path('compras/', FinalizaCompraListView.as_view(), name = 'compra_produtos'),
 
   
 ]

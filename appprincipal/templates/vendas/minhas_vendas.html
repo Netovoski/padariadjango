@@ -29,13 +29,46 @@
             <td>{{ compra.fkfuncionario }}</td>
             <td>{{ compra.vdatacriacao }}</td>
 
-           {% for venda_produto in venda_produtos %} 
-        <td>{{ venda_produto.total }}</td>
+        <td>R$ {{ total.total }}</td>
        
-        {% endfor %}
-
             <td><a href="{% url 'vendas:nova_venda' compra.id %}" class="btn btn-primary">Acessar Compra</a></td>
-            <td><a href="{% url 'vendas:compra_produtos' compra.id %}" class="btn btn-success">Finaliza Compra</a></td>
+            
+        <!-- Botão para acionar modal -->
+        <td><button type="button" class="btn btn-success" data-toggle="modal" data-target="#ExemploModalCentralizado">
+            Finaliza Compra
+        </button></td>
+        
+        <!-- Modal -->
+        <div class="modal fade" id="ExemploModalCentralizado" tabindex="-1" role="dialog"
+            aria-labelledby="TituloModalCentralizado" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="TituloModalCentralizado">A compra {{ id }} será finalizada no valor de R$ {{ total.total }}</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Fechar">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="modal-body">
+                            <h5>Pagamento em dinheiro:</h5>
+                            <p><a href="{% url 'vendas:compra_produtos' %}" role="button" class="btn btn-secondary popover-test" title="Dinheiro"
+                                    data-content="O conteúdo do popover é definido aqui.">Dinheiro</a> </p>
+                            <hr>
+                            <h5>Outros tipos de pagamento:</h5>
+                            <p><a href="#" role="button" class="btn btn-secondary popover-test"
+                                    title="Outros" data-content="O conteúdo do popover é definido aqui.">Outros</a> </p>
+                            <hr>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-primary" data-dismiss="modal">Fechar</button>
+                        
+                        
+                    </div>
+                </div>
+            </div>
+        </div>
             <td><a href="{% url 'vendas:deletarvenda' compra.id %}" class="btn btn-danger">Excluir</a></td>
         </tr> {% endfor %}
     </tbody>

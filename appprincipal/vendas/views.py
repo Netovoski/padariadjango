@@ -19,6 +19,7 @@ from django.contrib.auth.mixins import LoginRequiredMixin #para Classes Based Vi
 from django.contrib.auth.models import Group
 from django.utils.decorators import method_decorator
 import ipdb
+from django.contrib import messages
 
 # Create your views here.
 
@@ -97,55 +98,66 @@ class VendaDeleteView(LoginRequiredMixin, DeleteView):
         return reverse("vendas:minhasvendas")
 
 
-@login_required
-def CompraListView(request):
+class CompraListView(LoginRequiredMixin, ListView):
+    model = Venda2
+    template_name = "vendas/minhas_vendas.html"
+    context_object_name= "compras"
 
-
-    #vendedor = Venda_Produto.objects.get(id=pk)
-    #venda = vendedor.fkvenda.id
-    compras = Venda2.objects.all()
-    venda_produtos = Venda_Produto.objects.all()
-    #total = Venda_Produto.objects.all().annotate(total=Sum(F('quantidade')*F('precovenda'),output_field=models.FloatField()))
-    #total = Venda_Produto.objects.all().annotate(total=F('quantidade')*F('precovenda'))
-    #produtos = Venda_Produto.objects.filter(fkvenda_id=id)
-    #prodcomsoma = produtos.values('quantidade').aggregate(prodcomsoma=Sum("quantidade"))
-    contexto = {
-        'compras': compras,
-        #'total' : total,
-        #'produto' : produto,
-        'venda_produtos' : venda_produtos
-    }
+    def get_queryset(self):
+        return Venda2.objects.filter(fkfuncionario=self.request.user)
     
-    return render(request, "vendas/minhas_vendas.html",contexto)
+    def get_context_data(self, **kwargs):
+        #ido = self.kwargs['idvenda2']
 
-def finalizacompra(request, id):
+        context = super(CompraListView, self).get_context_data(**kwargs)
+        total = Venda_Produto.objects.all().aggregate(total=Sum(F('quantidade')*F('precovenda'),output_field=models.FloatField()))
 
-    try:
-        vendedor = Venda_Produto.objects.get(id = vendedor)
+        context['total'] = total
         
-        venda_produto = Venda_Produto.objects.filter(fkvenda=vendedor).all()
-        quantidade_total_produtos = 0
-        item = Venda_Produto.objects.all()
-    
-        args = None
-        if compra is None:
+        return context
 
-            args = {
-                'msg': 'Nenhum produto no adcionado',
-                'vendedor': vendedor.id
-            }
-        else:
-            args = {
-                'item': item,
-                'compra': compra,
-                'vendedor': vendedor,
-                #'valor_total': valor_total_produtos,
-                'quantidade_total': quantidade_total_produtos,
-        }
+# @login_required
+# def DeletarUnid(request,pk):
+#     tp = Venda_Produto.objects.get(id=pk)
+#     venda = tp.fkvenda.id
 
-    except vendedor.DoesNotExist:
-        return reverse("vendas:minhasvendas")
+#     tp.delete()
     
+#     return redirect("vendas:nova_venda", idvenda2=venda)
+
+class FinalizaCompraListView(LoginRequiredMixin,ListView):
+    model = Venda_Produto
+    template_name = "vendas/compras.html"
+    context_object_name = "venda_produto"
+
+# def finalizaCompra(request, id):
+#     venda = Venda_Produto.objects.get(id=pk)
     
-    return render(request, 'vendas/compras.html', args)
-    
+
+#     venda_produto = Venda_Produto.objects.filter(fkvenda=vendedor).all()
+#     quantidade_total_produtos = 0
+#     compra = Venda_Produto.objects.all()
+
+#     args = None
+#     if compra is None:
+
+#         args = {
+#             'msg': 'Nenhum produto no adcionado',
+#             'vendedor': vendedor.id
+#         }
+#     else:
+#         args = {
+#             #'item': item,
+#             'compra': compra,
+#             'vendedor': vendedor,
+#             #'valor_total': valor_total_produtos,
+#             'quantidade_total': quantidade_total_produtos,
+#     }
+
+#     return render(request, 'vendas/compras.html', args)
+
+# class finalizaCompra(LoginRequiredMixin, View):
+#     template_name = "compras.html"
+#     model = Venda_Produto
+#     context_object_name = 'venda_produto'
+#     success_url = reverse_lazy('appprincipal:index')

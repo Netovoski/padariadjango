@@ -48,6 +48,7 @@ INSTALLED_APPS = [
     'appprincipal.produto',
     'appprincipal.vendas',
     'appprincipal.registration',
+    'bootstrap_modal_forms',
 ]
 
 MIDDLEWARE = [

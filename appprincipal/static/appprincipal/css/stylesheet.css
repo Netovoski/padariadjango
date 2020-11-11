@@ -1,0 +1,16 @@
+/* Version Button */
+#version-display{
+    background-color: #e61c66;
+    color: white;
+    box-shadow: 5px 12px 12px #2e6da4;
+    text-align: center;
+    display: inline;
+    font-weight: bolder;
+    padding: 15px;
+    position: fixed;
+    top: 40px;
+    left: -5px;
+    z-index: 3000;
+    border-top-right-radius: 20px;
+    border-bottom-right-radius: 20px;
+}

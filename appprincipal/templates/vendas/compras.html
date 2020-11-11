@@ -6,51 +6,57 @@
 
 {% block conteudo %}
 <section id="meus-pedidos" class="container px-4">
-    <div class="text-lefth mb-5">
-        <h4>Carrinho de compras: <br> <strong>{{vendedor}}</strong></h4>
+    <div class="text-center">
+        <h6>Padaria Boa Sorte</h6>
+
+    </div>
+    <div class="text-center mb-5">
+        <h4>Relátorio carrinho de compras finalizada: <br> </h4>
     </div>
     <div class="row mb-5">
         {% if msg is not None %}
-        <div class="col text-right">
+        <div class="col text-center">
             <p class="mb-5"><strong>{{msg}}</strong></p>
+            <a href="#" class="btn btn-primary">Compra Finalizada</a>
         </div>
         {% endif %}
-        {% if compra is not None %}
+       
         <div class="table-responsive">
             <table class="table table-striped table-hover">
                 <thead class="thead-dark">
-                    <tr>
-                        <th scope="col">#</th>
-                        <th scope="col">Produto</th>
-                        <th scope="col">Valor</th>
-                        <th scope="col">Quantidade</th>
-                        </tr>
+                    <th>Ordem </th>
+                                <th>Produto </th>
+                                <th>Tipo Produto</th>
+                                <th>Quantidade</th>
+                                <th>Preço</th>
+                                <th></th>
                 </thead>
                 <tbody>
-                    {% for item in item %}
+                    
+                    {% for venda_produto in venda_produto %}
                     <tr>
-                        <th scope="row">{{item.id}}</th>
-                        <td>{{item.fkproduto}}</td>
-                        
-                        <td>{{item.quantidade}}</td>
-                        
-                        </td>
+                        <th scope="row">{{venda_produto.id}}</th>
+                        <td>{{venda_produto.fkproduto.fktipoprod}}</td>
+                        <td>{{ venda_produto.fkproduto.nmproduto }}</td>
+                        <td>{{venda_produto.quantidade}}</td>
+                        <td>{{venda_produto.precovenda}}</td>
+            
+                        <td>                        </td>
                     </tr>
                     {% endfor %}
                 </tbody>
-                <tfooter>
-                    <tr>
-                        <th scope="col">#</th>
-                        <th scope="col">Produto</th>
-                        <th scope="col"> valor total R$</th>
-                        <th scope="col">{{quantidade_total}}</th>
-                        <th scope="col"><button class="btn btn-sm btn-primary">Comprar</button></th>
-                    </tr>
-                </tfooter>
+                <th> </th>
+                <th> </th>
+                <th>Quantidade Total:{{ prodcomsoma.prodcomsoma }}</th>
+                
+                <th>      Valor Total:R${{ total.total }}</th>
+                <th></th>
+                <th></th>
             </table>
         </div>
-        {% endif %}
+    
+       
     </div>
-</section> 
+</section>
 
 {% endblock %}
