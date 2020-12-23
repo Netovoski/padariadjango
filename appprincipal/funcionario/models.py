@@ -14,7 +14,8 @@ class TipoCargo(models.Model):
 
 class Funcionario(models.Model):
 
-    user = models.OneToOneField(User, on_delete=models.CASCADE)
+    #user = models.OneToOne(User, on_delete=models.CASCADE)
+    user = models.CharField(max_length=255, null=False, blank=False)
     nome = models.CharField(max_length=255, null=False, blank=False)
     sobrenome = models.CharField( max_length=255,null=False, blank=False)
     cpf = models.CharField( max_length = 255, null = False, blank= False)
